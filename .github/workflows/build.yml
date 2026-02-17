@@ -1,4 +1,4 @@
-name: Build Real Injector
+name: Build Injector Local
 on: [push, workflow_dispatch]
 
 jobs:
@@ -7,17 +7,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download Linject Source
-        run: |
-          # Скачиваем реальный исходный код инжектора (не заглушку!)
-          wget https://raw.githubusercontent.com/shiyisec/Linject/master/jni/linject.c -O linject.c
-          
-          # Проверяем, что файл скачался (выводим первые 5 строк)
-          head -n 5 linject.c
-
       - name: Build for Android arm64
         run: |
-          # Компилируем скачанный код
+          # Компилируем твой локальный linject.c
           $ANDROID_NDK_LATEST_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/clang \
           --target=aarch64-linux-android24 \
           --sysroot=$ANDROID_NDK_LATEST_HOME/toolchains/llvm/prebuilt/linux-x86_64/sysroot \
